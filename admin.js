@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js';
 import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, collection, onSnapshot, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js';
-import { products } from './admin-products.js?v=46';
+import { products } from './admin-products.js?v=49';
 const config={apiKey:'AIzaSyAgg0c6UVANqV16NA2nqsgqaTFxL_X1AC0',authDomain:'ap-903---nossas-coisinhas.firebaseapp.com',projectId:'ap-903---nossas-coisinhas',storageBucket:'ap-903---nossas-coisinhas.firebasestorage.app',messagingSenderId:'1090808233353',appId:'1:1090808233353:web:2c55008a9fb3b8cdebb558'};
 // Named Firebase app + memory-only auth keep the public site's anonymous session untouched.
 const app=initializeApp(config,'ap903-admin');
@@ -23,7 +23,7 @@ function render(){
   const bought=Boolean(purchased[id]);
   const otherOptionBought=p.kind==='either'&&p.options.some((_,j)=>j!==i&&purchased[key(p,j)])||p.kind==='hybrid'&&(Boolean(purchased[key(p,0)])||Boolean(purchased[key(p,1)]&&purchased[key(p,2)]));
   const disabled=busy||!loaded||(!bought&&otherOptionBought);
-  return `<div class="gift-row"><div class="gift-info"><strong>${safe(p.name)}</strong><small>${safe(option.name)}</small><span class="tag ${bought?'bought':''}">${bought?'✓ comprado':otherOptionBought?'outra opção já comprada':'disponível'}</span></div><button type="button" data-gift="${safe(id)}" ${disabled?'disabled':''} class="${bought?'marked':''}">${bought?'↶ desmarcar':'✓ marcar'}</button></div>`;
+  return `<div class="gift-row"><div class="gift-info"><strong>${safe(p.name)}</strong><small>${safe(option.name)}</small><span class="tag ${bought?'bought':''}">${bought?'✓ reservado':otherOptionBought?'outra opção já reservada':'disponível'}</span></div><button type="button" data-gift="${safe(id)}" ${disabled?'disabled':''} class="${bought?'marked':''}">${bought?'↶ desmarcar':'✓ marcar'}</button></div>`;
  }).join('')}</section>`).join('');
  list.querySelectorAll('[data-gift]').forEach(button=>button.addEventListener('click',()=>toggle(button.dataset.gift)));
 }
@@ -32,7 +32,7 @@ async function toggle(id){
  const match=products.flatMap(p=>p.options.map((_,i)=>({p,i,id:key(p,i)}))).find(x=>x.id===id);
  if(!match)return;
  const {p,i}=match,bought=Boolean(purchased[id]);
- if(!confirm(bought?`Desmarcar “${p.options[i].name}” e disponibilizar novamente?`:`Marcar “${p.options[i].name}” como comprado?`))return;
+ if(!confirm(bought?`Desmarcar “${p.options[i].name}” e disponibilizar novamente?`:`Marcar “${p.options[i].name}” como reservado?`))return;
  busy=true;status.textContent='Salvando alteração…';render();
  try{
   await runTransaction(db,async tx=>{
@@ -40,10 +40,10 @@ async function toggle(id){
    const refs=grouped?p.options.map((_,j)=>doc(db,'presentes',key(p,j))):[doc(db,'presentes',id)];
    const snaps=[];for(const ref of refs)snaps.push(await tx.get(ref));
    const current=grouped?snaps[i]:snaps[0];
-   if(bought){if(!current.exists())throw new Error('A compra já foi desmarcada.');tx.delete(doc(db,'presentes',id));}
+   if(bought){if(!current.exists())throw new Error('A reserva já foi desmarcada.');tx.delete(doc(db,'presentes',id));}
    else{
-    if(current.exists())throw new Error('Este presente já foi comprado.');
-    if(p.kind==='either'&&snaps.some(s=>s.exists()))throw new Error('Alternativa já comprada.');
+    if(current.exists())throw new Error('Este presente já foi reservado.');
+    if(p.kind==='either'&&snaps.some(s=>s.exists()))throw new Error('Alternativa já reservada.');
     if(p.kind==='hybrid'&&(snaps[0].exists()||(snaps[1].exists()&&snaps[2].exists())))throw new Error('Grupo já completo.');
     tx.set(doc(db,'presentes',id),{comprado:true,compradoPor:currentUser.uid,compradoEm:serverTimestamp()});
    }

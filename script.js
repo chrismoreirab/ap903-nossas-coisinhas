@@ -49,7 +49,7 @@ const isOwner=(p,i)=>Boolean(currentUser && purchased[giftKey(p,i)]?.compradoPor
 function done(p){return p.kind==='either'?p.options.some((_,i)=>isBought(p,i)):p.kind==='hybrid'?(isBought(p,0)||(isBought(p,1)&&isBought(p,2))):p.options.every((_,i)=>isBought(p,i))}
 function render(){
   document.querySelector('#filters').innerHTML=categories.map(c=>`<button class="filter ${activeCategory===c?'active':''}" data-filter="${c}">${c}</button>`).join('');
-  document.querySelector('#cards').innerHTML=[...products,{id:'pix',name:'Pix',category:'Outros',color:'pink',art:'pix'}].filter(p=>activeCategory==='Todos'||p.category===activeCategory).sort((a,b)=>a.id==='pix'?1:b.id==='pix'?-1:alphabetical(a,b)).map(p=>`<button class="gift-card ${p.color} ${p.id!=='pix'&&done(p)?'is-done':''}" data-id="${p.id}" aria-label="Ver opções de ${p.name}"><span class="card-top"><span>${p.category}</span><span>${p.id==='pix'?`copiar chave ${uiIcon("arrow")}`:done(p)?`${uiIcon("check")} comprado`:(p.kind==='all'||p.kind==='hybrid')?p.options.filter((_,j)=>isBought(p,j)).length+'/'+p.options.length+' escolhidos':`ver opções ${uiIcon("arrow")}`}</span></span><span class="card-art">${p.id==='pix'?'<span class="pix-card-art">R$ <span>♡</span></span>':illustration(p.art)}</span><span class="card-bottom"><span class="card-title-group"><span class="card-title">${p.name}</span>${p.note?`<span class="card-note-indicator">tem recaduxo</span>`:''}</span><span class="card-arrow">${uiIcon('arrow')}</span></span></button>`).join('');
+  document.querySelector('#cards').innerHTML=[...products,{id:'pix',name:'Pix',category:'Outros',color:'pink',art:'pix'}].filter(p=>activeCategory==='Todos'||p.category===activeCategory).sort((a,b)=>a.id==='pix'?1:b.id==='pix'?-1:alphabetical(a,b)).map(p=>`<button class="gift-card ${p.color} ${p.id!=='pix'&&done(p)?'is-done':''}" data-id="${p.id}" aria-label="Ver opções de ${p.name}"><span class="card-top"><span>${p.category}</span><span>${p.id==='pix'?`copiar chave ${uiIcon("arrow")}`:done(p)?`${uiIcon("check")} reservado`:(p.kind==='all'||p.kind==='hybrid')?p.options.filter((_,j)=>isBought(p,j)).length+'/'+p.options.length+' escolhidos':`ver opções ${uiIcon("arrow")}`}</span></span><span class="card-art">${p.id==='pix'?'<span class="pix-card-art">R$ <span>♡</span></span>':illustration(p.art)}</span><span class="card-bottom"><span class="card-title-group"><span class="card-title">${p.name}</span>${p.note?`<span class="card-note-indicator">tem recaduxo</span>`:''}</span><span class="card-arrow">${uiIcon('arrow')}</span></span></button>`).join('');
   document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{activeCategory=b.dataset.filter;render()});
   document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>b.dataset.id==='pix'?openPix():openGift(b.dataset.id));
 }
@@ -60,7 +60,7 @@ function statusText(){
   if(connectionError)return `A lista de presentes está visível, mas as marcações estão indisponíveis: ${connectionError}.`;
   if(!liveReady)return 'Conectando à lista compartilhada…';
   if(!currentUser)return 'Preparando sua identificação anônima…';
-  return 'Lista sincronizada. Marque apenas depois de comprar. Você pode desfazer suas próprias marcações neste navegador.';
+  return 'Lista sincronizada. Escolha o presente que você quer dar e reserve para evitar presentes repetidos. Você pode desfazer sua reserva neste navegador.';
 }
 function openPix(){
   currentGiftId=null;
@@ -75,10 +75,10 @@ function openGift(id){
   const p=products.find(x=>x.id===id);if(!p)return;
   currentGiftId=id;
   const count=p.options.filter((_,i)=>isBought(p,i)).length;
-  document.querySelector('#dialogContent').innerHTML=`<div class="dialog-art">${illustration(p.art)}</div><h3 class="dialog-title">${p.name}</h3><p class="dialog-sub">${p.kind==='either'?'Basta escolher uma das opções. Quando uma for comprada, este presente estará completo.':p.kind==='hybrid'?'O Galheteiro Ordalha completa o presente sozinho. Ou escolha os dois: Tok&Stok + Kit Caju.':'Cada opção é um presente independente. O grupo fica completo quando todas forem compradas.'}</p>${p.note?`<p class="gift-note"><span class="gift-note-label">recaduxo nosso</span><span>${p.note}</span></p>`:''}${p.kind==='all'||p.kind==='hybrid'?`<div class="group-progress">${p.kind==='hybrid'?(done(p)?'Presente completo':(isBought(p,0)?'Galheteiro comprado':`${Number(isBought(p,1))+Number(isBought(p,2))} de 2 itens alternativos comprados`)):`${count} de ${p.options.length} comprados`}</div>`:''}<div class="options">${p.options.map((o,i)=>{
+  document.querySelector('#dialogContent').innerHTML=`<div class="dialog-art">${illustration(p.art)}</div><h3 class="dialog-title">${p.name}</h3><p class="dialog-sub">${p.kind==='either'?'Basta escolher uma das opções. Quando uma for reservada, este presente estará completo.':p.kind==='hybrid'?'O Galheteiro Ordalha completa o presente sozinho. Ou escolha os dois: Tok&Stok + Kit Caju.':'Cada opção é um presente independente. O grupo fica completo quando todas forem reservadas.'}</p>${p.note?`<p class="gift-note"><span class="gift-note-label">recaduxo nosso</span><span>${p.note}</span></p>`:''}${p.kind==='all'||p.kind==='hybrid'?`<div class="group-progress">${p.kind==='hybrid'?(done(p)?'Presente completo':(isBought(p,0)?'Galheteiro reservado':`${Number(isBought(p,1))+Number(isBought(p,2))} de 2 itens alternativos reservados`)):`${count} de ${p.options.length} reservados`}</div>`:''}<div class="options">${p.options.map((o,i)=>{
     const bought=isBought(p,i),owner=isOwner(p,i),otherTaken=(p.kind==='either'||p.kind==='hybrid')&&done(p)&&!bought;
     const disabled=(!liveReady||!currentUser||Boolean(connectionError)||Boolean(workingKey)||otherTaken||(bought&&!owner));
-    const label=bought?(owner?'↶ Desfazer compra':'✓ Comprado'):(otherTaken?'Indisponível':'Já comprei');
+    const label=bought?(owner?'↶ Desfazer reserva':'✓ Reservado'):(otherTaken?'Indisponível':'Quero presentear');
     return `<div class="option"><div><strong>${o.name}</strong><small>${o.detail}</small>${o.url?`<a href="${o.url}" target="_blank" rel="noopener noreferrer">Ver produto ↗</a>`:'<small>Link em breve</small>'}</div><button data-buy="${i}" ${disabled?'disabled':''}>${workingKey===giftKey(p,i)?'Aguarde…':label}</button></div>`;
   }).join('')}</div><p class="dialog-hint" role="status">${statusText()}</p>`;
   document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>toggleGift(p,Number(b.dataset.buy)));
@@ -89,7 +89,7 @@ async function toggleGift(p,i){
   const key=giftKey(p,i),previous=purchased[key];
   if(previous&&!isOwner(p,i))return;
   if(!previous&&(p.kind==='either'||p.kind==='hybrid')&&done(p))return;
-  const message=previous?`Desfazer a marcação de “${p.options[i].name}”? O presente voltará a ficar disponível para todos.`:`Você já comprou “${p.options[i].name}”? Só confirme depois de finalizar a compra.`;
+  const message=previous?`Desfazer sua reserva de “${p.options[i].name}”? O presente voltará a ficar disponível para todos.`:`Quer reservar “${p.options[i].name}” para presentear Chris e Lucas? Assim ninguém escolhe o mesmo presente.`;
   if(!window.confirm(message))return;
   workingKey=key;openGift(p.id);
   try{await backend.toggle({p,i,previous,uid:currentUser.uid})}
@@ -100,7 +100,7 @@ function refresh(){render();if(dialog.open&&currentGiftId)openGift(currentGiftId
 // A renderização acontece ANTES de qualquer importação ou conexão externa.
 render();
 if(location.protocol==='file:'){
-  connectionError='para sincronizar as compras, publique o site ou abra-o por um servidor local (http://localhost)';
+  connectionError='para sincronizar as reservas, publique o site ou abra-o por um servidor local (http://localhost)';
 }else{
   import('./firebase-sync.js').then(mod=>mod.startFirebase({
     products,
