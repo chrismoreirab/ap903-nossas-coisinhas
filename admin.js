@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js';
 import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, collection, onSnapshot, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js';
-import { products } from './admin-products.js';
+import { products } from './admin-products.js?v=46';
 const config={apiKey:'AIzaSyAgg0c6UVANqV16NA2nqsgqaTFxL_X1AC0',authDomain:'ap-903---nossas-coisinhas.firebaseapp.com',projectId:'ap-903---nossas-coisinhas',storageBucket:'ap-903---nossas-coisinhas.firebasestorage.app',messagingSenderId:'1090808233353',appId:'1:1090808233353:web:2c55008a9fb3b8cdebb558'};
 // Named Firebase app + memory-only auth keep the public site's anonymous session untouched.
 const app=initializeApp(config,'ap903-admin');

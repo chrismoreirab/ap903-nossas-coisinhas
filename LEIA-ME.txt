@@ -1,4 +1,5 @@
-AP 903 — V45
-Atualização de ilustrações: luva térmica de forno em L e talheres de sobremesa lado a lado (colher + garfo).
-Mantidos os demais arquivos e funcionalidades da V44.
-Para publicar, envie os arquivos da pasta para a raiz do repositório GitHub Pages.
+AP 903 — V46
+Controle de versão dos arquivos locais CSS e JavaScript (?v=46), incluindo o catálogo do painel administrativo.
+A versão V45 de conteúdo, ilustrações, regras de compra e Firebase foi preservada.
+Substitua todos os arquivos na raiz do repositório GitHub Pages.
+Para versões futuras, altere ?v=46 para ?v=47, etc.
