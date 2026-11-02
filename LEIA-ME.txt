@@ -1,7 +1,5 @@
-AP 903 — V49
+AP 903 — V52
 
-Atualização de linguagem: “Quero presentear” para reservar, estado “reservado”, confirmação e mensagens coerentes com reserva. Sem mudança nos identificadores ou no esquema Firestore: reservas anteriores continuam preservadas.
-
-Publicação: envie todos os arquivos deste ZIP para a raiz do repositório GitHub Pages.
-
-V50: Corrigido carimbo visual do CSS de ✓ COMPRADO para ✓ RESERVADO. Cache-busting v50; registros do Firebase intactos.
+Mini geladeira: recaduxo atualizado com cores vinho, rosa, verde ou branca, à escolha de quem presentear.
+Preservados os demais produtos, IDs, reservas, Firebase, visual e painel administrativo da V51.
+Para publicar, envie os arquivos desta pasta à raiz do repositório GitHub Pages.
