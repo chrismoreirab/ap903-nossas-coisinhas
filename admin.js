@@ -13,12 +13,12 @@ const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
 function showLogin(text=''){dashboard.hidden=true;loginPanel.hidden=false;message.textContent=text;}
 function showDashboard(){loginPanel.hidden=true;dashboard.hidden=false;status.textContent='Sincronizando presentes…';}
 function render(){
- const items=products.flatMap(p=>p.options.map((option,i)=>({p,option,i,id:key(p,i)})));
+ const items=[...products].sort((a,b)=>a.name.localeCompare(b.name,'pt-BR',{sensitivity:'base'})).flatMap(p=>p.options.map((option,i)=>({p,option,i,id:key(p,i)})));
  const count=items.filter(x=>Boolean(purchased[x.id])).length;
  document.querySelector('#totalCount').textContent=items.length;
  document.querySelector('#boughtCount').textContent=count;
  document.querySelector('#availableCount').textContent=items.length-count;
- const groups=[...new Set(products.map(p=>p.category))];
+ const groups=[...new Set(products.map(p=>p.category))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
  list.innerHTML=groups.map(category=>`<section><h3 class="category-title">${safe(category)}</h3>${items.filter(x=>x.p.category===category).map(({p,option,i,id})=>{
   const bought=Boolean(purchased[id]);
   const otherOptionBought=p.kind==='either'&&p.options.some((_,j)=>j!==i&&purchased[key(p,j)]);

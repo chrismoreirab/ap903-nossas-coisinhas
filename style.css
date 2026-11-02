@@ -276,3 +276,183 @@ body{overflow-x:hidden}
  .catalog-subtitle-row .bagel-art{width:clamp(66px,19vw,105px);margin:0}
 }
 @media(max-width:360px){.catalog-subtitle-row .bagel-art{width:60px}}
+
+/* V16 — abertura mais compacta, mantendo arte original */
+.hero{padding-top:clamp(22px,3.4vw,48px)!important;padding-bottom:clamp(20px,3vw,42px)!important;min-height:0!important}
+.hero-title-wrap.hero-artwork{margin:0!important;min-height:0!important;padding:0!important;max-width:none!important}
+.hero-master-svg{display:block;width:min(70%,850px);height:auto}
+.hero-star{width:clamp(18px,2vw,29px)!important}
+.copy-strike{text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:var(--clay)}
+.pix-note{padding:65px clamp(22px,9vw,160px);border-top:1px solid var(--ink);text-align:left;background:var(--cream)}
+.pix-note h2{font-family:'Bree Serif',Georgia,serif;font-size:clamp(35px,5vw,64px);margin:15px 0;font-weight:700}
+.pix-note p{font:16px/1.7 Helvetica,Arial,sans-serif;max-width:650px;overflow-wrap:anywhere}
+.pix-copy{border:0;background:var(--pink);color:var(--ink);padding:13px 22px;font-weight:700;margin-top:10px}
+#pixFeedback{display:inline-block;margin-left:15px;font-size:13px}
+@media(max-width:700px){.hero{padding:20px 22px 24px!important}.hero-master-svg{width:100%}.hero-star{display:none}.pix-note{padding:55px 22px}}
+
+/* V17 — o logo integra a seção 01 / ABERTURA, sem uma tela exclusiva */
+.recado-section{min-height:0!important;justify-content:flex-start!important;padding-top:clamp(24px,3vw,46px)!important}
+.intro-mark{width:100%;max-width:1400px;margin:0 auto clamp(24px,3vw,44px);padding:0 clamp(0px,1vw,12px)}
+.intro-mark-image{display:block;width:clamp(230px,34%,470px);height:auto}
+.recado-layout{width:100%}
+.pix-card-art{font-family:'Bree Serif',Georgia,serif;font-size:clamp(54px,7vw,105px);font-weight:700;letter-spacing:-.08em;display:flex;gap:12px;align-items:center;justify-content:center}
+.pix-card-art span{color:var(--clay);font-size:.8em;transform:rotate(-13deg)}
+.pix-icon{font-family:'Bree Serif',Georgia,serif;font-size:90px;line-height:1;color:var(--clay);text-align:center}
+.pix-key{font-size:clamp(14px,2.4vw,19px);text-align:center;overflow-wrap:anywhere;margin:15px auto 20px}
+@media(max-width:700px){
+ .recado-section{padding:20px 22px 65px!important}
+ .intro-mark{margin-bottom:25px;padding:0}
+ .intro-mark-image{width:min(72%,330px)}
+}
+
+/* V18 — abertura começa imediatamente após o cabeçalho */
+.recado-section{padding-top:clamp(42px,6vw,82px)!important}
+.topbar .brand{gap:10px}
+.topbar .brand-ap strong{font-family:Helvetica,Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:.055em}
+@media(max-width:700px){.recado-section{padding-top:40px!important}.topbar .brand-ap strong{font-size:15px}}
+
+/* V19 — recadinhos originais da lista */
+.card-note-indicator{display:block;margin-top:7px;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:600;letter-spacing:.025em;line-height:1.4;opacity:.88}
+.gift-note{display:flex;flex-direction:column;gap:8px;margin:0 auto 22px;padding:15px 18px;max-width:440px;background:#e7d9c5;border-left:3px solid var(--clay);border-radius:2px 8px 8px 2px;font-size:13px;line-height:1.6;text-align:left}
+.gift-note-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay)}
+
+/* V20 — marca d'água da casinha atrás da ilustração cinematográfica */
+.cinema-camera{position:relative;isolation:isolate}
+.cinema-camera::before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:-8% -14% -8% 2%;background:url('simbolo-ap903.svg') center center / 105% auto no-repeat;opacity:.36;transform:none}
+.cinema-camera img{position:relative;z-index:1}
+@media(max-width:700px){.cinema-camera::before{inset:-5% -10% -5% 0;background-size:102% auto;opacity:.32}}
+
+/* V21 — casinha vertical e legível, atrás dos desenhos */
+
+/* V23 — casinha grande como na V21, mas com o telhado inteiro visível */
+.cinema-camera{position:relative;isolation:isolate;overflow:visible}
+.cinema-camera::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  width:108%;height:auto;aspect-ratio:320.58 / 269.25;
+  left:-4%;top:-8%;inset:auto;
+  background:url('simbolo-ap903-rosa.svg') center / contain no-repeat;
+  opacity:.60;transform:none;
+}
+.cinema-camera img{position:relative;z-index:1}
+@media(max-width:700px){
+  .cinema-camera::before{width:106%;left:-3%;top:-6%;opacity:.60}
+}
+
+/* V24 — casinha ao lado do título, alinhada à composição tipográfica */
+.cinema-camera::before{content:none!important;display:none!important}
+.welcome-title-lockup{display:grid;grid-template-columns:minmax(0,1fr) clamp(90px,13vw,165px);align-items:center;column-gap:clamp(6px,1.1vw,16px);width:100%;margin:0 0 24px}
+.welcome-title-lockup .welcome-heading{margin:0!important;white-space:nowrap;font-size:clamp(35px,4.25vw,67px);line-height:1.12}
+.welcome-title-house{display:block;width:100%;height:auto;align-self:center;justify-self:end;object-fit:contain}
+@media(max-width:1050px){.welcome-title-lockup{grid-template-columns:minmax(0,1fr) clamp(75px,10vw,115px)}.welcome-title-lockup .welcome-heading{font-size:clamp(31px,4.2vw,53px)}}
+@media(max-width:700px){.welcome-title-lockup{grid-template-columns:minmax(0,1fr) clamp(85px,25vw,135px);gap:6px}.welcome-title-lockup .welcome-heading{font-size:clamp(31px,7.3vw,52px)}}
+@media(max-width:390px){.welcome-title-lockup{grid-template-columns:minmax(0,1fr) 75px}.welcome-title-lockup .welcome-heading{font-size:clamp(27px,7.2vw,34px)}}
+
+/* V25 — sem casinha na abertura; manter apenas a marca do cabeçalho */
+.cinema-camera::before{content:none!important;display:none!important}
+
+/* V26 — títulos e ilustrações */
+.welcome-heading .heading-pink,.catalog-main-title .heading-pink{color:#DB8996}
+.welcome-heading .heading-dot,.catalog-main-title .heading-dot{color:#DB8996}
+.catalog-title-with-donut{display:flex;align-items:center;justify-content:flex-start;gap:clamp(12px,3vw,46px);max-width:100%;margin-top:23px}
+.catalog-title-with-donut .catalog-main-title{margin:0;flex:0 1 auto;min-width:0}
+.catalog-title-with-donut .bagel-art{display:block;width:clamp(82px,11vw,148px);height:auto;flex:0 0 auto;margin:0;transform:rotate(-9deg)}
+.catalog-subtitle-row{display:block;margin-top:clamp(18px,2.5vw,32px)}
+.catalog-subtitle-row p{max-width:590px}
+.cinema-sparkles{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:2}
+.cinema-sparkles path{stroke-linejoin:round;stroke-width:2.5}
+.sparkle-one{fill:none;stroke:#C15A42}
+.sparkle-two{fill:#DB8996;stroke:#DB8996}
+.sparkle-three{fill:none;stroke:#7B8260}
+@media(max-width:700px){.catalog-title-with-donut{gap:10px}.catalog-title-with-donut .catalog-main-title{font-size:clamp(29px,7.6vw,48px)}.catalog-title-with-donut .bagel-art{width:clamp(58px,18vw,100px)}}
+
+/* V29 — símbolo original substitui somente a ilustração de cinema da abertura */
+.cinema-camera.house-feature{display:flex;align-items:center;justify-content:center;max-width:540px;min-height:350px;transform:none;overflow:visible}
+.cinema-camera.house-feature::before,.cinema-camera.house-feature::after{content:none!important;display:none!important}
+.cinema-camera.house-feature img{display:block;width:min(100%,460px);height:auto;max-height:430px;object-fit:contain;filter:none;mix-blend-mode:normal;transform:none}
+@media(max-width:700px){.cinema-camera.house-feature{min-height:220px;max-width:100%;justify-self:center;transform:none}.cinema-camera.house-feature img{width:min(75%,290px);max-height:290px}}
+
+
+/* V30 — casinha rosa alinhada à base do CTA e microinterações */
+@media (min-width:701px){
+  .recado-layout{align-items:stretch}
+  .cinema-camera.house-feature{align-self:stretch;justify-self:stretch;display:flex;align-items:flex-end;justify-content:center;min-height:0;padding-bottom:0}
+  .cinema-camera.house-feature img{width:min(100%,440px);max-height:360px;object-fit:contain;object-position:center bottom}
+}
+@media (max-width:700px){
+  .cinema-camera.house-feature img{width:min(78%,300px)}
+}
+/* Efeitos sutis, no mesmo espírito dos cards */
+.welcome-frame .recado-cta{transition:transform .22s ease,background-color .22s ease,box-shadow .22s ease}
+.welcome-frame .recado-cta:hover{transform:translateY(-5px);box-shadow:0 7px 0 rgba(65,73,45,.12)}
+.welcome-frame .recado-cta span{display:inline-block;transition:transform .22s ease}
+.welcome-frame .recado-cta:hover span{transform:translate(3px,3px)}
+.cinema-camera.house-feature img{transition:transform .3s ease}
+.cinema-camera.house-feature:hover img{transform:translateY(-6px)}
+.catalog-title-with-donut .bagel-art{transition:transform .3s ease}
+.catalog-title-with-donut .bagel-art:hover{transform:rotate(10deg) scale(1.04)}
+.note-illustration img{transition:transform .3s ease}
+.note-illustration:hover img{transform:translateY(-6px) rotate(-2deg)}
+.topbar nav a,.brand{transition:opacity .2s ease,transform .2s ease}
+.topbar nav a:hover,.brand:hover{opacity:.7;transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){
+  .welcome-frame .recado-cta,.welcome-frame .recado-cta span,.cinema-camera.house-feature img,.catalog-title-with-donut .bagel-art,.note-illustration img,.topbar nav a,.brand{transition:none!important}
+  .welcome-frame .recado-cta:hover,.welcome-frame .recado-cta:hover span,.cinema-camera.house-feature:hover img,.catalog-title-with-donut .bagel-art:hover,.note-illustration:hover img,.topbar nav a:hover,.brand:hover{transform:none!important}
+}
+
+
+/* V31 — donut e estrela de cinco pontas giram uma vez ao passar o mouse.
+   Casinha e Mathilda permanecem estáticas. */
+.cinema-camera.house-feature img,
+.cinema-camera.house-feature:hover img,
+.note-illustration img,
+.note-illustration:hover img {
+  transform:none !important;
+  transition:none !important;
+}
+@keyframes ap903-donut-spin {
+  from { transform:rotate(-9deg); }
+  to { transform:rotate(351deg); }
+}
+@keyframes ap903-star-spin {
+  from { transform:rotate(20deg); }
+  to { transform:rotate(380deg); }
+}
+.catalog-title-with-donut .bagel-art:hover {
+  animation:ap903-donut-spin .85s cubic-bezier(.2,.65,.25,1) 1;
+  transform:rotate(-9deg);
+}
+.note > .star-note { pointer-events:auto; cursor:default; }
+.note > .star-note:hover {
+  animation:ap903-star-spin .85s cubic-bezier(.2,.65,.25,1) 1;
+  transform:rotate(20deg);
+}
+@media (prefers-reduced-motion:reduce) {
+  .catalog-title-with-donut .bagel-art:hover,
+  .note > .star-note:hover { animation:none !important; }
+}
+
+/* V32 — alinhamento editorial e interações ajustadas */
+/* Abertura e lista compartilham a mesma margem horizontal. */
+.recado-section {
+  padding-left:clamp(22px,6vw,110px) !important;
+  padding-right:clamp(22px,6vw,110px) !important;
+}
+.recado-layout { max-width:1400px; margin-inline:auto; }
+@media (max-width:700px) {
+  .recado-section { padding-left:22px !important; padding-right:22px !important; }
+  .catalog { padding-left:22px; padding-right:22px; }
+}
+/* Apenas o donut gira, lentamente, enquanto o cursor estiver sobre ele. */
+.catalog-title-with-donut .bagel-art:hover {
+  animation:ap903-donut-spin 3.6s linear infinite;
+  transform:rotate(-9deg);
+}
+/* Estrela de Mathilda, casinha e ilustração permanecem estáticas. */
+.note > .star-note, .note > .star-note:hover {
+  animation:none !important;
+  transition:none !important;
+  transform:rotate(20deg);
+}
+@media (prefers-reduced-motion:reduce) {
+  .catalog-title-with-donut .bagel-art:hover { animation:none !important; }
+}

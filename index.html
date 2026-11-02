@@ -13,8 +13,9 @@
 </head>
 <body>
   <header class="topbar">
-    <a href="#inicio" class="brand" aria-label="Voltar ao início">
-      <img class="brand-symbol" src="simbolo-ap903.svg" alt="Símbolo AP 903: casa e estrela">
+    <a href="#inicio" class="brand" aria-label="AP 903 — voltar ao início">
+      <img class="brand-symbol" src="simbolo-ap903.svg" alt="Símbolo de casa e estrela">
+      <span class="brand-ap"><strong>AP 903</strong></span>
     </a>
     <nav aria-label="Navegação principal">
       <a href="#lista">presentes</a>
@@ -23,29 +24,17 @@
   </header>
 
   <main>
-    <section class="hero" id="inicio">
-      <div class="hero-title-wrap hero-artwork">
-        <img src="nossas-cosinhas.svg" alt="TAKE AP 903 — Nossas coisinhas, com a casinha rosa e estrela" class="hero-master-svg">
-      </div>
-
-      <svg class="accent-star star-flat hero-star" viewBox="0 0 100 100" aria-hidden="true">
-        <path d="M50 6 C53 6 54 9 55 12 L62 34 C63 37 65 38 68 38 L91 39 C96 39 97 44 93 47 L75 61 C73 63 72 65 73 68 L80 89 C82 94 78 97 74 94 L55 81 C52 79 49 79 46 81 L27 94 C23 97 19 94 21 89 L28 68 C29 65 28 63 26 61 L8 47 C4 44 5 39 10 39 L33 38 C36 38 38 37 39 34 L45 12 C46 9 47 6 50 6Z"/>
-      </svg>
-
-    </section>
-
-    <section class="recado-section" aria-label="Precisamos falar sobre a casa">
+    <section class="recado-section" id="inicio" aria-label="Precisamos falar sobre a casa">
       <div class="recado-layout">
       <div class="welcome-frame" id="recado">
-        <span class="welcome-kicker">01 / ABERTURA</span>
-        <h2 class="welcome-heading">Precisamos falar sobre a casa.</h2>
-        <p>Criamos essa lista para ajudar os queridos que têm perguntado o que ainda falta para nossa casa nova e querem nos presentear.</p>
-        <p>Mas queremos deixar claro que ela é apenas um guia! Não existe nenhuma obrigação de nos dar um presente, muito menos de escolher algo que esteja aqui. Como em todo bom filme, o que importa é quem faz parte da história. <span class="heart">♥</span></p>
+        <h2 class="welcome-heading">Precisamos falar<br>sobre <span class="heading-pink">a casa</span><span class="heading-dot">.</span></h2>
+        <p>Criamos essa lista para ajudar os queridos que têm perguntado o que ainda falta para nossa casa nova e querem nos presentear. Escolhemos os links que estavam mais baratos no dia, mas incentivamos a pesquisar em outros lugares também!</p>
+        <p>Também queremos deixar claro que esse é apenas um guia! <s class="copy-strike">Chris se empolgou com o desenvolvimento do site.</s> Não existe nenhuma obrigação de nos dar um presente, muito menos de escolher algo que esteja aqui. Como em todo bom filme, o que importa é quem faz parte da história. <span class="heart">♥</span></p>
         <a class="hero-scroll recado-cta" href="#lista">ver nossa listinha <span aria-hidden="true">↘</span></a>
       </div>
 
-      <div class="cinema-camera" role="img" aria-label="Ilustração cinematográfica: câmera de duas bobinas inclinada, claquete e película">
-        <img src="cinema-ilustracao.png" alt="" loading="lazy">
+      <div class="cinema-camera house-feature" role="img" aria-label="Símbolo original da casinha do AP 903">
+        <img src="simbolo-ap903-rosa.svg" alt="" loading="eager">
       </div>
       </div>
     </section>
@@ -56,16 +45,15 @@
       </svg>
       <div class="section-top">
         <div class="catalog-heading">
-          <span class="eyebrow">02 / LISTA DE PRESENTES</span>
-          <h2 class="catalog-main-title">Tudo em todo lugar...<br><span>(menos aqui).</span></h2>
-          <div class="catalog-subtitle-row">
-            <p>Escolha um desenho para ver as opções. Alguns presentes têm alternativas, outros têm mais de um tipo. Tudo com carinho, sem obrigação nenhuma!</p>
-            <svg class="bagel-art" viewBox="0 0 150 120" role="img" aria-label="Ilustração de um bagel com sementes">
+          <div class="catalog-title-with-donut">
+          <h2 class="catalog-main-title">Tudo em todo lugar...<br><span class="heading-pink">(menos aqui)</span><span class="heading-dot">.</span></h2>
+          <svg class="bagel-art" viewBox="0 0 150 120" role="img" aria-label="Ilustração de um bagel com sementes">
               <path d="M75 10C109 10 137 31 137 60s-28 50-62 50S13 89 13 60 41 10 75 10Zm0 35c-12 0-21 7-21 15s9 15 21 15 21-7 21-15-9-15-21-15Z" fill="#D8B995" fill-rule="evenodd" stroke="#41492D" stroke-width="3.5" stroke-linejoin="round"/>
               <path d="M37 35l6-3m16-9 2 6m27-7 5 6m22 8 6-2M25 60l7 1m87 1 8-2M42 88l5-5m49 9 4-6m-2-52 5 2m-47 1 4-2" fill="none" stroke="#F3E6D2" stroke-width="4" stroke-linecap="round"/>
               <path d="M34 27q5-5 9-1m22-7q5-3 8 2m32 7q5-4 9 1M22 72q5-3 8 1m89 9q5-4 9 0M55 98q4-4 8 0" fill="none" stroke="#41492D" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+          </svg>
           </div>
+          <div class="catalog-subtitle-row"><p>Escolha um desenho para ver as opções. Alguns presentes têm alternativas, outros têm mais de um tipo. Tudo com carinho, sem obrigação nenhuma!</p></div>
         </div>
       </div>
       <div class="filters" id="filters" aria-label="Filtrar presentes"></div>
@@ -81,7 +69,6 @@
         <img src="mathilda-plantinha.png" alt="Ilustração de Mathilda ao lado de uma planta em vaso terracota, inspirada em O Profissional" loading="lazy">
       </div>
       <div class="note-copy">
-        <span class="eyebrow">03 / CENA PÓS-CRÉDITOS</span>
         <h2>Ah, e plantinhas<br><em>também são bem-vindas!</em></h2>
         <p>Especialmente as fáceis de cuidar, porque ainda estamos aprendendo a ser pais de planta. 🌱</p>
         <div class="signature">Com carinho,<br><strong>Chris &amp; Lucas ♡</strong></div>

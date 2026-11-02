@@ -1,7 +1,5 @@
-AP 903 — V14 corrigida
+AP 903 — V32
 
-Abra index.html diretamente para visualizar os cards e o design.
-A sincronização de compras exige que o site esteja servido por HTTP(S), como GitHub Pages.
-O Firebase é carregado separadamente e não impede que os cards sejam renderizados.
-A confirmação e a marcação só funcionam após conexão e autenticação.
-Não alteramos o design da V13.
+Ajustes: alinhamento horizontal da abertura e da lista; estrela de Mathilda estática; donut girando lentamente enquanto o mouse estiver sobre ele.
+
+Publique os arquivos na raiz do repositório GitHub, substituindo os anteriores.
