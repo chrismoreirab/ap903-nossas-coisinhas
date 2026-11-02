@@ -1,4 +1,4 @@
-AP 903 — V42
-Porta-condimentos: Galheteiro Ordalha sozinho OU Tok&Stok + Kit Caju.
-Marcação individual sincronizada com Firebase e painel admin.
-Correção da transação para grupos com múltiplos itens: agora permite marcar os demais itens sem sobrescrever os anteriores.
+AP 903 — V45
+Atualização de ilustrações: luva térmica de forno em L e talheres de sobremesa lado a lado (colher + garfo).
+Mantidos os demais arquivos e funcionalidades da V44.
+Para publicar, envie os arquivos da pasta para a raiz do repositório GitHub Pages.
