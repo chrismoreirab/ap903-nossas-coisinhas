@@ -1,5 +1,3 @@
-AP 903 — V46
-Controle de versão dos arquivos locais CSS e JavaScript (?v=46), incluindo o catálogo do painel administrativo.
-A versão V45 de conteúdo, ilustrações, regras de compra e Firebase foi preservada.
-Substitua todos os arquivos na raiz do repositório GitHub Pages.
-Para versões futuras, altere ?v=46 para ?v=47, etc.
+AP 903 — V48
+Hero mobile: título dimensionado para ocupar aproximadamente 80% da largura da tela; casinha mais próxima. Desktop e funcionalidades preservados da V47.
+Arquivos CSS/JS com cache busting v48.

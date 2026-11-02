@@ -564,3 +564,55 @@ body{overflow-x:hidden}
   /* Sem espaço lateral seguro para a estrela da seção de plantas */
   .note>.star-note{display:none!important}
 }
+
+/* V47 — hero mobile: tipografia protagonista, casinha como apoio */
+@media (max-width:700px){
+  .opening-scene{padding-left:14px;padding-right:14px}
+  .opening-scene-inner{width:100%;height:clamp(325px,96vw,470px)}
+  .opening-scene .welcome-heading{
+    top:0;left:0;z-index:2;
+    font-size:clamp(48px,13vw,84px);
+    line-height:.88;
+    letter-spacing:-.055em;
+    white-space:nowrap;
+  }
+  .opening-house{width:clamp(112px,34vw,175px);right:0;bottom:0;z-index:1}
+}
+@media (max-width:380px){
+  .opening-scene .welcome-heading{font-size:12.6vw;letter-spacing:-.06em}
+  .opening-house{width:33vw}
+}
+
+/* V48 — mobile: título ocupa cerca de 80% da largura; casinha integrada */
+@media (max-width:700px){
+  .opening-scene{
+    padding:clamp(64px,10svh,110px) 14px 82px;
+    align-items:flex-start;
+  }
+  .opening-scene-inner{
+    width:100%;
+    height:clamp(290px,85vw,390px);
+    margin:0;
+  }
+  .opening-scene .welcome-heading{
+    position:relative;
+    top:auto;left:auto;
+    width:80vw;max-width:80vw;
+    font-size:15.5vw;
+    line-height:.88;
+    letter-spacing:-.055em;
+    white-space:nowrap;
+    z-index:2;
+  }
+  .opening-house{
+    position:absolute;
+    top:clamp(155px,45vw,245px);
+    right:3%;bottom:auto;
+    width:clamp(112px,35vw,175px);
+    z-index:1;
+  }
+}
+@media (max-width:380px){
+  .opening-scene .welcome-heading{font-size:15.5vw;letter-spacing:-.055em}
+  .opening-house{width:35vw;top:45vw}
+}
