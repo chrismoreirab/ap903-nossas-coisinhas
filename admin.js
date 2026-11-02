@@ -21,7 +21,7 @@ function render(){
  const groups=[...new Set(products.map(p=>p.category))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
  list.innerHTML=groups.map(category=>`<section><h3 class="category-title">${safe(category)}</h3>${items.filter(x=>x.p.category===category).map(({p,option,i,id})=>{
   const bought=Boolean(purchased[id]);
-  const otherOptionBought=p.kind==='either'&&p.options.some((_,j)=>j!==i&&purchased[key(p,j)]);
+  const otherOptionBought=p.kind==='either'&&p.options.some((_,j)=>j!==i&&purchased[key(p,j)])||p.kind==='hybrid'&&(Boolean(purchased[key(p,0)])||Boolean(purchased[key(p,1)]&&purchased[key(p,2)]));
   const disabled=busy||!loaded||(!bought&&otherOptionBought);
   return `<div class="gift-row"><div class="gift-info"><strong>${safe(p.name)}</strong><small>${safe(option.name)}</small><span class="tag ${bought?'bought':''}">${bought?'✓ comprado':otherOptionBought?'outra opção já comprada':'disponível'}</span></div><button type="button" data-gift="${safe(id)}" ${disabled?'disabled':''} class="${bought?'marked':''}">${bought?'↶ desmarcar':'✓ marcar'}</button></div>`;
  }).join('')}</section>`).join('');
@@ -36,11 +36,17 @@ async function toggle(id){
  busy=true;status.textContent='Salvando alteração…';render();
  try{
   await runTransaction(db,async tx=>{
-   const refs=p.kind==='either'?p.options.map((_,j)=>doc(db,'presentes',key(p,j))):[doc(db,'presentes',id)];
+   const grouped=p.kind==='either'||p.kind==='hybrid';
+   const refs=grouped?p.options.map((_,j)=>doc(db,'presentes',key(p,j))):[doc(db,'presentes',id)];
    const snaps=[];for(const ref of refs)snaps.push(await tx.get(ref));
-   const current=p.kind==='either'?snaps[i]:snaps[0];
+   const current=grouped?snaps[i]:snaps[0];
    if(bought){if(!current.exists())throw new Error('A compra já foi desmarcada.');tx.delete(doc(db,'presentes',id));}
-   else{if(snaps.some(s=>s.exists()))throw new Error('Este presente ou uma alternativa já foi comprado.');tx.set(doc(db,'presentes',id),{comprado:true,compradoPor:currentUser.uid,compradoEm:serverTimestamp()});}
+   else{
+    if(current.exists())throw new Error('Este presente já foi comprado.');
+    if(p.kind==='either'&&snaps.some(s=>s.exists()))throw new Error('Alternativa já comprada.');
+    if(p.kind==='hybrid'&&(snaps[0].exists()||(snaps[1].exists()&&snaps[2].exists())))throw new Error('Grupo já completo.');
+    tx.set(doc(db,'presentes',id),{comprado:true,compradoPor:currentUser.uid,compradoEm:serverTimestamp()});
+   }
   });
   status.textContent='Alteração salva!';
  }catch(err){console.error(err);status.textContent='Não foi possível salvar. Confira a conexão e tente novamente.';alert('Não foi possível atualizar o presente. Ele pode ter sido alterado por outra pessoa.');}

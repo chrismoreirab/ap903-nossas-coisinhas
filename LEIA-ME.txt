@@ -1,5 +1,4 @@
-AP 903 — V40
-Catálogo atualizado conforme a lista enviada.
-Design V39, Firebase e painel administrativo preservados.
-Itens sem link no documento permanecem sem link.
-Registros antigos dos itens removidos não foram apagados do Firestore.
+AP 903 — V42
+Porta-condimentos: Galheteiro Ordalha sozinho OU Tok&Stok + Kit Caju.
+Marcação individual sincronizada com Firebase e painel admin.
+Correção da transação para grupos com múltiplos itens: agora permite marcar os demais itens sem sobrescrever os anteriores.

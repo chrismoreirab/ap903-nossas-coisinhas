@@ -32,15 +32,18 @@ export async function startFirebase({products,onPurchases,onUser,onError}){
       await runTransaction(db,async tx=>{
         // Para presentes alternativos, ler todas as opções antes de escrever.
         // Assim duas compras simultâneas não marcam alternativas distintas.
-        const refs=p.kind==='either'?p.options.map((_,j)=>doc(db,'presentes',`${p.id}-${j}`)):[ref];
+        const grouped=p.kind==='either'||p.kind==='hybrid';
+        const refs=grouped?p.options.map((_,j)=>doc(db,'presentes',`${p.id}-${j}`)):[ref];
         const snapshots=[];
         for(const candidate of refs)snapshots.push(await tx.get(candidate));
-        const current=snapshots[i] && p.kind==='either'?snapshots[i]:snapshots[0];
+        const current=grouped?snapshots[i]:snapshots[0];
         if(previous){
           if(!current.exists()||current.data().compradoPor!==uid)throw new Error('Compra não pertence a esta identificação.');
           tx.delete(ref);
         }else{
-          if(snapshots.some(s=>s.exists()))throw new Error('Presente já comprado.');
+          if(current.exists())throw new Error('Presente já comprado.');
+          if(p.kind==='either'&&snapshots.some(s=>s.exists()))throw new Error('Alternativa já comprada.');
+          if(p.kind==='hybrid'&&(snapshots[0].exists()||snapshots[1].exists()&&snapshots[2].exists()))throw new Error('Grupo já completo.');
           tx.set(ref,{comprado:true,compradoPor:uid,compradoEm:serverTimestamp()});
         }
       });
