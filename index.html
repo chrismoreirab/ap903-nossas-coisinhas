@@ -19,23 +19,30 @@
     </a>
     <nav aria-label="Navegação principal">
       <a href="#lista">presentes</a>
-      <a href="#recado">recadinho</a>
+      <a href="#recado">recaduxo</a>
     </nav>
   </header>
 
   <main>
-    <section class="recado-section" id="inicio" aria-label="Precisamos falar sobre a casa">
-      <div class="recado-layout">
-      <div class="welcome-frame" id="recado">
-        <h2 class="welcome-heading">Precisamos falar<br>sobre <span class="heading-pink">a casa</span><span class="heading-dot">.</span></h2>
-        <p>Criamos essa lista para ajudar os queridos que têm perguntado o que ainda falta para nossa casa nova e querem nos presentear. Escolhemos os links que estavam mais baratos no dia, mas incentivamos a pesquisar em outros lugares também!</p>
-        <p>Também queremos deixar claro que esse é apenas um guia! <s class="copy-strike">Chris se empolgou com o desenvolvimento do site.</s> Não existe nenhuma obrigação de nos dar um presente, muito menos de escolher algo que esteja aqui. Como em todo bom filme, o que importa é quem faz parte da história. <span class="heart">♥</span></p>
-        <a class="hero-scroll recado-cta" href="#lista">ver nossa listinha <span aria-hidden="true">↘</span></a>
+    <!-- V34: primeiro ato, somente o título e o símbolo -->
+    <section class="opening-scene" id="inicio" aria-label="Precisamos falar sobre a casa">
+      <div class="opening-scene-inner">
+        <h1 class="welcome-heading">Precisamos<br>falar sobre<br><span class="heading-pink">a casa</span><span class="heading-dot">.</span></h1>
+        <div class="opening-house" role="img" aria-label="Símbolo rosa da casinha do AP 903">
+          <img src="simbolo-ap903-rosa.svg" alt="" loading="eager">
+        </div>
       </div>
+      <a class="opening-next" href="#recado" aria-label="Continuar lendo">continue a história <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></a>
+    </section>
 
-      <div class="cinema-camera house-feature" role="img" aria-label="Símbolo original da casinha do AP 903">
-        <img src="simbolo-ap903-rosa.svg" alt="" loading="eager">
-      </div>
+    <!-- Segundo ato: a copy ganha seu próprio espaço -->
+    <section class="story-scene" id="recado" aria-label="Nossa história e a lista de presentes">
+      <div class="story-scene-inner">
+        <div class="story-copy">
+          <p>Criamos essa lista para ajudar os queridos que têm perguntado o que ainda falta para nossa casa nova e querem nos presentear. Escolhemos os links que estavam mais baratos no dia, mas incentivamos a pesquisar em outros lugares também!</p>
+          <p>Também queremos deixar claro que esse é apenas um guia! <s class="copy-strike">Chris se empolgou com o desenvolvimento do site.</s> Não existe nenhuma obrigação de nos dar um presente, muito menos de escolher algo que esteja aqui. Como em todo bom filme, o que importa é quem faz parte da história. <span class="heart">♥</span></p>
+          <a class="hero-scroll recado-cta" href="#lista">ver nossa listinha <span aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 19 19M19 9v10H9"/></svg></span></a>
+        </div>
       </div>
     </section>
 
@@ -70,7 +77,7 @@
       </div>
       <div class="note-copy">
         <h2>Ah, e plantinhas<br><em>também são bem-vindas!</em></h2>
-        <p>Especialmente as fáceis de cuidar, porque ainda estamos aprendendo a ser pais de planta. 🌱</p>
+        <p>Especialmente as fáceis de cuidar, porque ainda vamos aprender a ser pais de planta. <svg class="ui-icon sprout-icon" viewBox="0 0 24 24" aria-label="plantinha" role="img"><path d="M12 21v-10M12 15C6 15 4 12 4 7c5 0 8 2 8 8Zm0-4c0-5 3-8 8-8 0 5-3 8-8 8Z"/></svg></p>
         <div class="signature">Com carinho,<br><strong>Chris &amp; Lucas ♡</strong></div>
       </div>
     </section>
@@ -78,7 +85,7 @@
 
   <footer>
     <span>AP 903 · CHRIS &amp; LUCAS</span>
-    <a href="#inicio">voltar ao topo ↑</a>
+    <a href="#inicio">voltar ao topo <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4m-7 7 7-7 7 7"/></svg></a>
   </footer>
 
   <dialog id="giftDialog" class="gift-dialog">

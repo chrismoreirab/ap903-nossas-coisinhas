@@ -456,3 +456,111 @@ body{overflow-x:hidden}
 @media (prefers-reduced-motion:reduce) {
   .catalog-title-with-donut .bagel-art:hover { animation:none !important; }
 }
+
+/* V33: ícones vetoriais estáveis em dispositivos móveis */
+.ui-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.card-arrow .ui-icon{width:24px;height:24px}
+.sprout-icon{width:19px;height:19px;vertical-align:-.25em;color:var(--olive)}
+.card-note-indicator{font-size:inherit}
+
+/* V34 — abertura em dois atos. Mantém catálogo e pós-créditos da V33. */
+.opening-scene,.story-scene{background:var(--cream);scroll-margin-top:0}
+.opening-scene{position:relative;min-height:calc(100svh - 78px);display:flex;align-items:center;padding:70px clamp(22px,6vw,110px) 100px}
+.opening-scene-inner,.story-scene-inner{width:100%;max-width:1400px;margin-inline:auto}
+.opening-scene-inner{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr);align-items:center;gap:clamp(20px,4vw,70px)}
+.opening-scene .welcome-heading{font-size:clamp(54px,6.4vw,106px);line-height:1.08;max-width:none;margin:0;letter-spacing:-.025em}
+.opening-house{display:flex;align-items:center;justify-content:center;min-width:0}
+.opening-house img{display:block;width:min(100%,430px);height:auto;max-height:min(55vh,470px);object-fit:contain;transform:none!important;transition:none!important}
+.opening-next{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap}
+.opening-next .ui-icon{width:18px;height:18px;transition:transform .2s ease}
+.opening-next:hover .ui-icon{transform:translateY(5px)}
+.story-scene{min-height:80svh;display:flex;align-items:center;padding:clamp(75px,10vw,140px) clamp(22px,6vw,110px);border-top:1px solid rgba(65,73,45,.15)}
+.story-copy{max-width:760px}
+.story-copy p{font-size:clamp(17px,1.8vw,22px);line-height:1.72;margin:0 0 25px}
+.story-copy .recado-cta{display:inline-flex;align-items:center;gap:12px;margin:20px 0 0;text-align:left;transition:transform .22s ease,box-shadow .22s ease}
+.story-copy .recado-cta:hover{transform:translateY(-5px);box-shadow:0 7px 0 rgba(65,73,45,.12)}
+.story-copy .recado-cta span{display:inline-flex}
+@media(max-width:700px){
+ .opening-scene{min-height:calc(100svh - 65px);padding:50px 22px 90px}
+ .opening-scene-inner{grid-template-columns:1fr;gap:28px}
+ .opening-scene .welcome-heading{font-size:clamp(43px,10.1vw,68px);line-height:1.1}
+ .opening-house{justify-content:center}
+ .opening-house img{width:min(56vw,220px);max-height:28svh}
+ .opening-next{bottom:25px}
+ .story-scene{min-height:85svh;padding:75px 22px 90px}
+ .story-copy p{font-size:16px;line-height:1.75}
+}
+@media(prefers-reduced-motion:reduce){.opening-next .ui-icon,.story-copy .recado-cta{transition:none!important}.opening-next:hover .ui-icon,.story-copy .recado-cta:hover{transform:none!important}}
+
+/* V35 — abertura em três linhas e recaduxo como informação secundária */
+.opening-scene .welcome-heading{font-weight:700;line-height:.99;letter-spacing:-.025em;font-size:clamp(54px,6.3vw,104px)}
+.card-title-group{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:7px}
+.card-title-group .card-title{display:block}
+.card-title-group .card-note-indicator{display:inline-block;margin:0;font-family:Helvetica,Arial,sans-serif!important;font-size:12px!important;font-weight:400!important;letter-spacing:0!important;line-height:1.4!important;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;opacity:.82}
+@media(max-width:700px){.opening-scene .welcome-heading{font-size:clamp(42px,10.1vw,68px);line-height:1.02}.card-title-group .card-note-indicator{font-size:11px!important}}
+
+/* V36 — capa tipográfica maior, em diálogo com a casinha, sem alterar os outros atos */
+@media (min-width:1100px){
+  .opening-scene-inner{grid-template-columns:minmax(0,1.45fr) minmax(230px,.55fr);gap:0;isolation:isolate}
+  .opening-scene .welcome-heading{font-size:clamp(106px,8.4vw,132px);line-height:.94;letter-spacing:-.034em;position:relative;z-index:2;white-space:nowrap}
+  .opening-house{position:relative;z-index:1;margin-left:-80px;justify-content:flex-end}
+  .opening-house img{width:min(100%,430px);max-height:min(62vh,500px)}
+}
+@media (min-width:701px) and (max-width:1099px){
+  .opening-scene-inner{grid-template-columns:minmax(0,1.5fr) minmax(150px,.5fr);gap:0}
+  .opening-scene .welcome-heading{font-size:clamp(64px,8.2vw,91px);line-height:.96;letter-spacing:-.03em;position:relative;z-index:2}
+  .opening-house{margin-left:-25px;position:relative;z-index:1}
+}
+@media (max-width:700px){
+  .opening-scene .welcome-heading{line-height:.98;letter-spacing:-.03em}
+}
+
+/* V37 — mobile: capa única com título e casinha em composição sobreposta */
+@media (max-width:700px){
+  .opening-scene{min-height:calc(100svh - 65px);padding:30px 20px 78px;justify-content:center}
+  .opening-scene-inner{display:block;position:relative;width:100%;height:clamp(295px,88vw,405px);margin:0 auto;isolation:isolate}
+  .opening-scene .welcome-heading{position:absolute;top:0;left:0;z-index:2;margin:0;font-size:clamp(43px,10.6vw,69px);line-height:.96;letter-spacing:-.035em;white-space:nowrap}
+  .opening-house{position:absolute;z-index:1;right:0;bottom:0;width:clamp(170px,57vw,265px);margin:0;display:block}
+  .opening-house img{width:100%;max-height:none;height:auto;display:block}
+  .opening-next{bottom:22px}
+}
+@media (max-width:360px){
+  .opening-scene .welcome-heading{font-size:10.1vw}
+  .opening-scene-inner{height:clamp(280px,92vw,340px)}
+  .opening-house{width:57vw}
+}
+
+/* V38 — detalhes editoriais */
+.opening-scene-inner,.story-scene-inner,.catalog,.note{position:relative}
+.v38-star{position:absolute;display:block;width:clamp(22px,3vw,42px);height:auto;fill:#DB8996;stroke:none;pointer-events:none;z-index:0}
+.opening-scene-inner>.v38-star{width:29px;top:-38px;right:12%;transform:rotate(-12deg)}
+.story-scene-inner>.v38-star{width:37px;right:5%;top:-38px;fill:#C15A42;transform:rotate(16deg)}
+.catalog>.v38-star{width:27px;right:15%;top:45px;fill:#7B8260;transform:rotate(11deg)}
+.note>.v38-star{width:35px;right:9%;top:14%;fill:#DB8996;transform:rotate(-14deg)}
+.cards .card,.cards .gift-card{border-radius:18px;overflow:hidden}
+.filters button,.filters .filter,.recado-cta,.hero-scroll{border-radius:14px}
+.gift-dialog{border-radius:20px}.gift-dialog .close,.gift-dialog button:not(.close){border-radius:12px}
+.gift-note,.pix-note{border-radius:14px}
+@media(max-width:700px){
+.opening-scene-inner{height:clamp(270px,76vw,345px)}
+.opening-scene .welcome-heading{font-size:clamp(46px,12vw,78px);line-height:.91;letter-spacing:-.045em}
+.opening-house{width:clamp(115px,37vw,185px);right:0;bottom:0}
+.opening-scene-inner>.v38-star{width:20px;top:-24px;right:7%}
+.story-scene-inner>.v38-star{width:25px;right:1%;top:-42px}
+.catalog>.v38-star{width:20px;right:7%;top:20px}
+.note>.v38-star{width:24px;right:7%;top:7%}
+.cards .card,.cards .gift-card{border-radius:15px}
+}
+@media(max-width:380px){.opening-scene .welcome-heading{font-size:11.7vw}.opening-house{width:35vw}}
+
+/* V39: estrelas sempre fora das áreas de leitura */
+.catalog,.note{position:relative}
+.catalog>.catalog-star{top:12px!important;right:18px!important;width:26px!important;height:26px!important;z-index:0!important}
+.note>.star-note{top:auto!important;bottom:14px!important;right:18px!important;width:25px!important;height:25px!important;z-index:0!important;pointer-events:none!important;animation:none!important}
+.catalog .section-top,.catalog .filters,.catalog .cards,.catalog .catalog-foot,.note .note-copy,.note .note-illustration{position:relative;z-index:1}
+@media(max-width:900px){
+  /* Estrela em faixa própria, sem posicionamento sobre títulos ou parágrafos */
+  .catalog>.catalog-star{position:relative!important;display:block!important;top:auto!important;right:auto!important;margin:0 0 16px auto!important;width:23px!important;height:23px!important}
+  /* Sem espaço lateral seguro para a estrela da seção de plantas */
+  .note>.star-note{display:none!important}
+}
