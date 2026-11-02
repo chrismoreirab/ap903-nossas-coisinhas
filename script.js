@@ -102,7 +102,7 @@ render();
 if(location.protocol==='file:'){
   connectionError='para sincronizar as reservas, publique o site ou abra-o por um servidor local (http://localhost)';
 }else{
-  import('./firebase-sync.js').then(mod=>mod.startFirebase({
+  import('./firebase-sync.js?v=50').then(mod=>mod.startFirebase({
     products,
     onPurchases(data){purchased=data;liveReady=true;connectionError='';refresh()},
     onUser(user){currentUser=user;refresh()},
