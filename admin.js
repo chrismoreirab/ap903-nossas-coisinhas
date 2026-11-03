@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js';
 import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, collection, onSnapshot, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js';
-import { products } from './admin-products.js?v=58';
+import { products } from './admin-products.js?v=59';
 const config={apiKey:'AIzaSyAgg0c6UVANqV16NA2nqsgqaTFxL_X1AC0',authDomain:'ap-903---nossas-coisinhas.firebaseapp.com',projectId:'ap-903---nossas-coisinhas',storageBucket:'ap-903---nossas-coisinhas.firebasestorage.app',messagingSenderId:'1090808233353',appId:'1:1090808233353:web:2c55008a9fb3b8cdebb558'};
 // Named Firebase app + memory-only auth keep the public site's anonymous session untouched.
 const app=initializeApp(config,'ap903-admin');
@@ -10,6 +10,7 @@ const loginPanel=document.querySelector('#loginPanel'),dashboard=document.queryS
 let currentUser=null,unsubscribe=null,purchased={},loaded=false,busy=false;
 const key=(p,i)=>p.options[i].reservationKey||`${p.id}-${i}`;
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reservationDate=record=>{const stamp=record?.compradoEm;const date=stamp?.toDate?.()??(stamp?.seconds!=null?new Date(stamp.seconds*1000):null);return date&&Number.isFinite(date.getTime())?new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(date).replace(',',' às'):'horário não disponível';};
 function showLogin(text=''){dashboard.hidden=true;loginPanel.hidden=false;message.textContent=text;}
 function showDashboard(){loginPanel.hidden=true;dashboard.hidden=false;status.textContent='Sincronizando presentes…';}
 function renderVisitors(items){
@@ -35,7 +36,7 @@ function renderVisitors(items){
    const hasSurprise=group.items.some(x=>x.record.tipoIdentificacao==='surpresa');
    const label=named?named.record.nomePresenteador.trim():hasSurprise?'🎁 surpresa':`Anônimo #${String(++anonymous).padStart(2,'0')}`;
    const subtitle=named?'nome informado na reserva':hasSurprise?'preferiu não informar o nome':'nome não informado';
-   return `<article class="visitor-card"><div class="visitor-top"><strong>${safe(label)}</strong><span>${group.items.length} ${group.items.length===1?'presente':'presentes'}</span></div><small>${safe(subtitle)}</small><ul>${group.items.map(({item,record})=>`<li><span>${safe(item.p.name)}${item.p.options.length>1?` · ${safe(item.option.name)}`:''}</span>${record.tipoIdentificacao==='surpresa'&&named?'<small>🎁 surpresa</small>':''}</li>`).join('')}</ul></article>`;
+   return `<article class="visitor-card"><div class="visitor-top"><strong>${safe(label)}</strong><span>${group.items.length} ${group.items.length===1?'presente':'presentes'}</span></div><small>${safe(subtitle)}</small><ul>${group.items.map(({item,record})=>`<li><span>${safe(item.p.name)}${item.p.options.length>1?` · ${safe(item.option.name)}`:''}</span><small class="reservation-time">${safe(reservationDate(record))}</small>${record.tipoIdentificacao==='surpresa'&&named?'<small>🎁 surpresa</small>':''}</li>`).join('')}</ul></article>`;
  }).join('')}</div>`:'<p class="visitors-empty">Ainda não há presentes reservados.</p>');
 }
 function render(){
@@ -52,7 +53,7 @@ function render(){
   const disabled=busy||!loaded||(!bought&&otherOptionBought);
   const record=purchased[id];
   const who=record?(record.tipoIdentificacao==='surpresa'?'🎁 surpresa':record.nomePresenteador?`por ${safe(record.nomePresenteador)}`:'nome não informado'):'';
-  return `<div class="gift-row"><div class="gift-info"><strong>${safe(p.name)}</strong><small>${safe(option.name)}</small>${who?`<small class="gift-presenter">${who}</small>`:''}<span class="tag ${bought?'bought':''}">${bought?'✓ reservado':otherOptionBought?'outra opção já reservada':'disponível'}</span></div><button type="button" data-gift="${safe(id)}" ${disabled?'disabled':''} class="${bought?'marked':''}">${bought?'↶ desmarcar':'✓ marcar'}</button></div>`;
+  return `<div class="gift-row"><div class="gift-info"><strong>${safe(p.name)}</strong><small>${safe(option.name)}</small>${who?`<small class="gift-presenter">${who}</small>`:''}${record?`<small class="gift-reserved-at">${safe(reservationDate(record))}</small>`:''}<span class="tag ${bought?'bought':''}">${bought?'✓ reservado':otherOptionBought?'outra opção já reservada':'disponível'}</span></div><button type="button" data-gift="${safe(id)}" ${disabled?'disabled':''} class="${bought?'marked':''}">${bought?'↶ desmarcar':'✓ marcar'}</button></div>`;
  }).join('')}</section>`).join('');
  list.querySelectorAll('[data-gift]').forEach(button=>button.addEventListener('click',()=>toggle(button.dataset.gift)));
 }

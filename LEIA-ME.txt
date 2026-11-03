@@ -1,7 +1,3 @@
-AP 903 — V58
-
-Atualização do painel admin: agrupamento de reservas por identificador anônimo do Firebase, mostrando presentes de cada identificador. Os nomes informados e as reservas surpresa continuam disponíveis.
-
-Substitua os arquivos no GitHub Pages. Não altere nem apague documentos do Firestore. Não é necessário mudar as regras do Firestore para esta versão.
-
-A numeração Anônimo #01, #02 etc. é relativa às reservas ativas e pode mudar quando alguém desmarca um presente. Identificadores não comprovam identidade pessoal.
+AP 903 — V59
+Painel administrativo: data e horário de cada reserva (horário de Brasília), sem modificar registros ou regras do Firestore.
+Substitua os arquivos do repositório GitHub Pages e faça commit.
