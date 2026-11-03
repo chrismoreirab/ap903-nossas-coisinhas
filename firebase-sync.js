@@ -27,13 +27,13 @@ export async function startFirebase({products,onPurchases,onUser,onError}){
   },error=>{console.error('Auth:',error);onError('falha na autenticação')});
   return {
     async toggle({p,i,previous,uid}){
-      const key=`${p.id}-${i}`;
+      const key=p.options[i].reservationKey||`${p.id}-${i}`;
       const ref=doc(db,'presentes',key);
       await runTransaction(db,async tx=>{
         // Para presentes alternativos, ler todas as opções antes de escrever.
         // Assim duas compras simultâneas não marcam alternativas distintas.
         const grouped=p.kind==='either'||p.kind==='hybrid';
-        const refs=grouped?p.options.map((_,j)=>doc(db,'presentes',`${p.id}-${j}`)):[ref];
+        const refs=grouped?p.options.map((_,j)=>doc(db,'presentes',p.options[j].reservationKey||`${p.id}-${j}`)):[ref];
         const snapshots=[];
         for(const candidate of refs)snapshots.push(await tx.get(candidate));
         const current=grouped?snapshots[i]:snapshots[0];

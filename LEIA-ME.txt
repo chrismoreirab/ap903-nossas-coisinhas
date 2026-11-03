@@ -1,3 +1,5 @@
-AP 903 - V53
-Atualizacao: recaduxo da mini geladeira apenas "pro nosso divo diabetico"; opcoes de cores somente no detalhe do produto.
-Publicar todos os arquivos no GitHub Pages.
+AP 903 — V56
+
+Novo card: Banco baú para cozinha, Marcena, freijó, 120 × 40 × 45 cm, sem divisórias internas.
+IDs e dados dos demais presentes preservados. Google Analytics mantido.
+Não apague nem recrie as reservas no Firebase.
