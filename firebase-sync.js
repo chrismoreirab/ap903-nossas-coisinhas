@@ -26,7 +26,7 @@ export async function startFirebase({products,onPurchases,onUser,onError}){
     });
   },error=>{console.error('Auth:',error);onError('falha na autenticação')});
   return {
-    async toggle({p,i,previous,uid}){
+    async toggle({p,i,previous,uid,identity=null}){
       const key=p.options[i].reservationKey||`${p.id}-${i}`;
       const ref=doc(db,'presentes',key);
       await runTransaction(db,async tx=>{
@@ -44,7 +44,7 @@ export async function startFirebase({products,onPurchases,onUser,onError}){
           if(current.exists())throw new Error('Presente já comprado.');
           if(p.kind==='either'&&snapshots.some(s=>s.exists()))throw new Error('Alternativa já comprada.');
           if(p.kind==='hybrid'&&(snapshots[0].exists()||snapshots[1].exists()&&snapshots[2].exists()))throw new Error('Grupo já completo.');
-          tx.set(ref,{comprado:true,compradoPor:uid,compradoEm:serverTimestamp()});
+          tx.set(ref,{comprado:true,compradoPor:uid,compradoEm:serverTimestamp(),...(identity?.tipoIdentificacao==='surpresa'?{tipoIdentificacao:'surpresa'}:identity?.tipoIdentificacao==='nome'?{tipoIdentificacao:'nome',nomePresenteador:identity.nomePresenteador}: {})});
         }
       });
     }

@@ -51,6 +51,7 @@ let connectionError='';
 let workingKey=null;
 let currentGiftId=null;
 let backend=null;
+let reservationPromptOpen=false;
 const alphabetical=(a,b)=>a.name.localeCompare(b.name,'pt-BR',{sensitivity:'base'});
 const categories=['Todos','Cozinha','Quarto','Decoração','Banheiro','Outros'];
 const giftKey=(p,i)=>p.options[i].reservationKey||`${p.id}-${i}`;
@@ -65,6 +66,7 @@ function render(){
 }
 const dialog=document.querySelector('#giftDialog');
 document.querySelector('#closeDialog').onclick=()=>dialog.close();
+dialog.addEventListener('close',()=>{reservationPromptOpen=false});
 dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
 function statusText(){
   if(connectionError)return `A lista de presentes está visível, mas as marcações estão indisponíveis: ${connectionError}.`;
@@ -94,25 +96,60 @@ function openGift(id){
   document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>toggleGift(p,Number(b.dataset.buy)));
   if(!dialog.open)dialog.showModal();
 }
-async function toggleGift(p,i){
+function askWhoIsPresenting(p,i){
+  reservationPromptOpen=true;
+  const target=p.options[i];
+  const content=document.querySelector('#dialogContent');
+  content.innerHTML=`<div class="reservation-identity"><div class="reservation-heart">♡</div><h3 class="dialog-title">quem tá presenteando? 💗</h3><p class="dialog-sub">conta pra gente seu nome</p><form id="reservationNameForm"><label for="reservationName">seu nome ou apelido</label><input id="reservationName" type="text" maxlength="80" autocomplete="name" placeholder="seu nome ou apelido" required><button type="submit" class="dialog-action">confirmar reserva</button></form><button type="button" class="dialog-action surprise-action" id="surpriseReserve">quero fazer surpresa 🎁</button><button type="button" class="identity-back" id="identityBack">voltar às opções</button><p class="dialog-hint" id="reservationFeedback" role="status" aria-live="polite"></p></div>`;
+  document.querySelector('#identityBack').onclick=()=>{reservationPromptOpen=false;openGift(p.id)};
+  document.querySelector('#reservationNameForm').onsubmit=async e=>{
+    e.preventDefault();const name=document.querySelector('#reservationName').value.trim();
+    if(!name){document.querySelector('#reservationFeedback').textContent='conta pra gente seu nome ou escolha a surpresa 💗';return;}
+    await commitReservation(p,i,{nomePresenteador:name,tipoIdentificacao:'nome'});
+  };
+  document.querySelector('#surpriseReserve').onclick=()=>commitReservation(p,i,{tipoIdentificacao:'surpresa'});
+  document.querySelector('#reservationName').focus();
+}
+async function commitReservation(p,i,identity=null){
   if(!backend||!currentUser||!liveReady||connectionError||workingKey)return;
   const key=giftKey(p,i),previous=purchased[key];
   if(previous&&!isOwner(p,i))return;
   if(!previous&&(p.kind==='either'||p.kind==='hybrid')&&done(p))return;
-  const message=previous?`Desfazer sua reserva de “${p.options[i].name}”? O presente voltará a ficar disponível para todos.`:`Quer reservar “${p.options[i].name}” para presentear Chris e Lucas? Assim ninguém escolhe o mesmo presente.`;
-  if(!window.confirm(message))return;
-  workingKey=key;openGift(p.id);
-  try{await backend.toggle({p,i,previous,uid:currentUser.uid})}
-  catch(err){console.error('Erro ao atualizar presente:',err);window.alert('Não foi possível atualizar o presente. Confira sua conexão e tente novamente.');}
-  finally{workingKey=null;if(currentGiftId===p.id)openGift(p.id)}
+  workingKey=key;
+  if(reservationPromptOpen){
+    document.querySelectorAll('#reservationNameForm button,#surpriseReserve,#identityBack').forEach(b=>b.disabled=true);
+    document.querySelector('#reservationFeedback').textContent='salvando sua reserva…';
+  }
+  try{
+    await backend.toggle({p,i,previous,uid:currentUser.uid,identity});
+    reservationPromptOpen=false;
+    if(currentGiftId===p.id)openGift(p.id);
+  }catch(err){
+    console.error('Erro ao atualizar presente:',err);
+    if(reservationPromptOpen){
+      document.querySelector('#reservationFeedback').textContent='não foi possível reservar. tente novamente.';
+      document.querySelectorAll('#reservationNameForm button,#surpriseReserve,#identityBack').forEach(b=>b.disabled=false);
+    }else window.alert('Não foi possível atualizar o presente. Confira sua conexão e tente novamente.');
+  }finally{workingKey=null;if(!reservationPromptOpen&&currentGiftId===p.id)openGift(p.id)}
 }
-function refresh(){render();if(dialog.open&&currentGiftId)openGift(currentGiftId)}
+async function toggleGift(p,i){
+  if(!backend||!currentUser||!liveReady||connectionError||workingKey)return;
+  const previous=purchased[giftKey(p,i)];
+  if(previous){
+    if(!isOwner(p,i))return;
+    if(!window.confirm(`Desfazer sua reserva de “${p.options[i].name}”? O presente voltará a ficar disponível para todos.`))return;
+    return commitReservation(p,i);
+  }
+  if((p.kind==='either'||p.kind==='hybrid')&&done(p))return;
+  askWhoIsPresenting(p,i);
+}
+function refresh(){render();if(dialog.open&&currentGiftId&&!reservationPromptOpen)openGift(currentGiftId)}
 // A renderização acontece ANTES de qualquer importação ou conexão externa.
 render();
 if(location.protocol==='file:'){
   connectionError='para sincronizar as reservas, publique o site ou abra-o por um servidor local (http://localhost)';
 }else{
-  import('./firebase-sync.js?v=55').then(mod=>mod.startFirebase({
+  import('./firebase-sync.js?v=57').then(mod=>mod.startFirebase({
     products,
     onPurchases(data){purchased=data;liveReady=true;connectionError='';refresh()},
     onUser(user){currentUser=user;refresh()},
