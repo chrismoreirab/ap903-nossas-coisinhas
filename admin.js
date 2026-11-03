@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js';
 import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, collection, onSnapshot, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js';
-import { products } from './admin-products.js?v=57';
+import { products } from './admin-products.js?v=58';
 const config={apiKey:'AIzaSyAgg0c6UVANqV16NA2nqsgqaTFxL_X1AC0',authDomain:'ap-903---nossas-coisinhas.firebaseapp.com',projectId:'ap-903---nossas-coisinhas',storageBucket:'ap-903---nossas-coisinhas.firebasestorage.app',messagingSenderId:'1090808233353',appId:'1:1090808233353:web:2c55008a9fb3b8cdebb558'};
 // Named Firebase app + memory-only auth keep the public site's anonymous session untouched.
 const app=initializeApp(config,'ap903-admin');
@@ -12,12 +12,39 @@ const key=(p,i)=>p.options[i].reservationKey||`${p.id}-${i}`;
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function showLogin(text=''){dashboard.hidden=true;loginPanel.hidden=false;message.textContent=text;}
 function showDashboard(){loginPanel.hidden=true;dashboard.hidden=false;status.textContent='Sincronizando presentes…';}
+function renderVisitors(items){
+ const panel=document.querySelector('#visitorGroups');
+ const reserved=items.filter(x=>purchased[x.id]);
+ const byUid=new Map();
+ for(const item of reserved){
+  const record=purchased[item.id];
+  // Um mesmo UID anônimo representa a mesma sessão de autenticação, não uma identidade comprovada.
+  const uid=typeof record.compradoPor==='string'&&record.compradoPor?record.compradoPor:null;
+  const groupKey=uid?`uid:${uid}`:`sem-uid:${item.id}`;
+  if(!byUid.has(groupKey))byUid.set(groupKey,{uid,items:[],earliest:Infinity});
+  const group=byUid.get(groupKey);
+  group.items.push({item,record});
+  const millis=record.compradoEm?.toMillis?.()??Infinity;
+  group.earliest=Math.min(group.earliest,millis);
+ }
+ const groups=[...byUid.values()].sort((a,b)=>a.earliest-b.earliest||String(a.uid).localeCompare(String(b.uid)));
+ let anonymous=0;
+ panel.innerHTML=`<div class="visitors-heading"><div><span class="eyebrow">DETETIVES DO AP 903 👀</span><h3>Quem reservou o quê?</h3></div><span class="visitors-count">${groups.length} ${groups.length===1?'identificação':'identificações'}</span></div><p class="visitors-help">Presentes com o mesmo identificador do Firebase aparecem juntos. Isso sugere o mesmo navegador/sessão, mas não confirma quem é a pessoa. A cidade não fica registrada.</p>`+
+ (groups.length?`<div class="visitors-grid">${groups.map(group=>{
+   const named=group.items.find(x=>x.record.tipoIdentificacao==='nome'&&typeof x.record.nomePresenteador==='string'&&x.record.nomePresenteador.trim());
+   const hasSurprise=group.items.some(x=>x.record.tipoIdentificacao==='surpresa');
+   const label=named?named.record.nomePresenteador.trim():hasSurprise?'🎁 surpresa':`Anônimo #${String(++anonymous).padStart(2,'0')}`;
+   const subtitle=named?'nome informado na reserva':hasSurprise?'preferiu não informar o nome':'nome não informado';
+   return `<article class="visitor-card"><div class="visitor-top"><strong>${safe(label)}</strong><span>${group.items.length} ${group.items.length===1?'presente':'presentes'}</span></div><small>${safe(subtitle)}</small><ul>${group.items.map(({item,record})=>`<li><span>${safe(item.p.name)}${item.p.options.length>1?` · ${safe(item.option.name)}`:''}</span>${record.tipoIdentificacao==='surpresa'&&named?'<small>🎁 surpresa</small>':''}</li>`).join('')}</ul></article>`;
+ }).join('')}</div>`:'<p class="visitors-empty">Ainda não há presentes reservados.</p>');
+}
 function render(){
  const items=[...products].sort((a,b)=>a.name.localeCompare(b.name,'pt-BR',{sensitivity:'base'})).flatMap(p=>p.options.map((option,i)=>({p,option,i,id:key(p,i)})));
  const count=items.filter(x=>Boolean(purchased[x.id])).length;
  document.querySelector('#totalCount').textContent=items.length;
  document.querySelector('#boughtCount').textContent=count;
  document.querySelector('#availableCount').textContent=items.length-count;
+ renderVisitors(items);
  const groups=[...new Set(products.map(p=>p.category))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
  list.innerHTML=groups.map(category=>`<section><h3 class="category-title">${safe(category)}</h3>${items.filter(x=>x.p.category===category).map(({p,option,i,id})=>{
   const bought=Boolean(purchased[id]);

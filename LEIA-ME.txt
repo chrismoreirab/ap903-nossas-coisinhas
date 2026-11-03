@@ -1,5 +1,7 @@
-AP 903 · V57
-Identificação opcional ao reservar: nome/apelido ou surpresa.
-Nomes ficam no documento da reserva no Firestore e são exibidos somente no painel administrativo.
-Preserva os IDs e registros existentes; não apaga nem migra dados.
-ATENÇÃO: verifique se as regras atuais do Firestore permitem os campos adicionais nomePresenteador e tipoIdentificacao.
+AP 903 — V58
+
+Atualização do painel admin: agrupamento de reservas por identificador anônimo do Firebase, mostrando presentes de cada identificador. Os nomes informados e as reservas surpresa continuam disponíveis.
+
+Substitua os arquivos no GitHub Pages. Não altere nem apague documentos do Firestore. Não é necessário mudar as regras do Firestore para esta versão.
+
+A numeração Anônimo #01, #02 etc. é relativa às reservas ativas e pode mudar quando alguém desmarca um presente. Identificadores não comprovam identidade pessoal.
