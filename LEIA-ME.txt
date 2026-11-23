@@ -1,6 +1,12 @@
-AP 903 — V60
+AP 903 — V65
 
-Atualização do catálogo: remoção da TV The Frame e do banco baú; atualização do jogo de cama; inclusão de guarda-roupas, panelas avulsas, taças de vinho e potes de sobremesa; unificação da iluminação; atualização de jarra, porta-condimentos e porta-copos.
-As chaves antigas de reserva dos itens reorganizados foram preservadas. Nenhum registro, regra ou configuração do Firestore foi alterado.
-Google Analytics, painel administrativo, autenticação e assets originais preservados.
-Substitua os arquivos do repositório GitHub Pages e faça commit.
+Atualizações desta versão:
+- Removida a mesa lateral do catálogo e do painel administrativo.
+- A categoria Casa foi removida; os itens que estavam nela foram movidos para Outros.
+- Padronizada a espessura do traço das ilustrações (3,3 px, com pontas e junções arredondadas).
+- Após uma reserva confirmada no Firebase, a tela de confirmação exibe o recado e o endereço dos pais da Chris, tanto para reservas com nome quanto para reservas surpresa.
+- A confirmação não aparece ao desfazer uma reserva nem em caso de erro.
+
+Google Analytics, configurações Firebase, autenticação e chaves dos presentes mantidos. Nenhum registro ou regra do Firestore foi alterado.
+
+Para publicar, substitua os arquivos do repositório pelos arquivos desta versão e faça commit.
